@@ -1,0 +1,47 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Tanmay Tweet
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="text-center text-primary mb-4">Welcome to Tweet App</h1>
+
+    <div class="text-center mb-4">
+        <a class="btn btn-lg btn-primary px-5 py-3" href="{% url 'tweet_create' %}">
+            Create New Tweet
+        </a>
+    </div>
+
+    <div class="row justify-content-center">
+        {% for tweet in tweets %}
+        <div class="col-md-4 col-sm-6 mb-4">
+            <div class="card shadow-lg border-0 rounded-lg overflow-hidden">
+                {% if tweet.photo %}
+                    <img src="{{ tweet.photo.url }}" class="card-img-top" alt="Tweet Image">
+                {% else %}
+                    <img src="https://via.placeholder.com/300" class="card-img-top" alt="No Image">
+                {% endif %}
+                
+                <div class="card-body p-4">
+                    <h5 class="card-title text-primary mb-3">@{{ tweet.user.username }}</h5>
+                    <p class="card-text text-muted">{{ tweet.text }}</p>
+                    
+                    <div class="d-flex justify-content-between align-items-center mt-3">
+                        {% if tweet.user == user %}
+                        <div>
+                            <a href="{% url 'tweet_edit' tweet.id %}" class="btn btn-sm btn-outline-primary me-2">Edit</a>
+                            <a href="{% url 'tweet_delete' tweet.id %}" class="btn btn-sm btn-outline-danger">Delete</a>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <p class="text-center text-muted">No tweets available.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

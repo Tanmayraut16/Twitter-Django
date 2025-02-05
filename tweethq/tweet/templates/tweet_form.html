@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Tanmay Tweet
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="text-center mt-4 mb-5">Welcome to Tweet App</h1>
+
+    <div class="card shadow-sm border-0 rounded p-4">
+        <h2 class="text-center mb-4">
+            {% if form.instance.pk %} Edit Tweet {% else %} Create Tweet {% endif %}
+        </h2>
+        
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="mb-3">
+                {{ form.as_p }}
+            </div>
+            <div class="d-flex justify-content-between">
+                <button type="submit" class="btn btn-warning px-4 py-2">Submit</button>
+                <a href="{% url 'tweet_list' %}" class="btn btn-outline-primary px-4 py-2">Back</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
